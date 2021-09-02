@@ -1,0 +1,17 @@
+pipeline{
+    agent any
+    stages {
+        stage('download'){
+            steps {
+            sh '''#!/bin/bash
+            echo "we are doing deployment"
+            wget --user=jaga --password=jaga http://3.14.252.150:8081/nexus/service/local/repositories/jaga/content/hello/hello-world/5/hello-world-5.war'''
+            }
+        }
+        stage('deploy'){
+            steps {
+            deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://18.118.161.173:8080')], contextPath: 'hello world', war: '**/*.war'
+            }
+        }
+    }
+}
