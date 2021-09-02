@@ -2,9 +2,9 @@ pipeline{
     agent any
     stages {
         stage('download'){
-        when {
-        branch star
-        }
+            when {
+                branch 'star'
+            }
             steps {
             sh '''#!/bin/bash
             echo "we are doing deployment"
@@ -12,9 +12,9 @@ pipeline{
             }
         }
         stage('deploy'){
-        when {
-        branch star
-        }
+            when {
+                branch 'star'
+            }
             steps {
             deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://18.118.161.173:8080')], contextPath: 'hello world', war: '**/*.war'
             }
